@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0yn3nr25fnug"]
+
+[ext_resource type="Script" path="res://player/mobile_controls.gd" id="1_4yh4e"]
+[ext_resource type="Texture2D" uid="uid://blloc5r5m3n8g" path="res://player/assets/mobile_controls/analog_stick_exterior.png" id="2_lvity"]
+[ext_resource type="Texture2D" uid="uid://bwfflqaq8qdfc" path="res://player/assets/mobile_controls/analog_stick_interior.png" id="3_2d7kl"]
+
+[node name="MobileControls" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_4yh4e")
+
+[node name="AnalogRoot" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(299, 309)
+scale = Vector2(1.72093, 1.72093)
+texture = ExtResource("2_lvity")
+
+[node name="AnalogStick" type="Sprite2D" parent="AnalogRoot"]
+unique_name_in_owner = true
+texture = ExtResource("3_2d7kl")
+
+[node name="MovementCapture" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CameraCapture" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JumpButton" type="Button" parent="CameraCapture"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -237.0
+offset_right = -104.0
+offset_bottom = -97.0
+grow_horizontal = 0
+grow_vertical = 0

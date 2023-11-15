@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ProfileData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://data/profile_data.gd" id="1_rh3ko"]
+
+[resource]
+script = ExtResource("1_rh3ko")
+player_name = "Player"
+login_uuid = "d3e8fc18-8ff5-4c48-b6dd-86974d51d01a"
+login_key = "7dea37a9-588c-45d2-a304-f9c535913452"

@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://ddnfgmmcrmm4c"]
+
+[ext_resource type="Shader" path="res://level/assets/tile/material/hexagon.gdshader" id="1_y05x8"]
+[ext_resource type="Texture2D" uid="uid://bsvljw4lm48ot" path="res://level/assets/tile/textures/hexagon_light.png" id="2_iimqn"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_y05x8")
+shader_parameter/base_color = Color(0, 0, 0, 1)
+shader_parameter/light_color = Color(0, 0, 0, 1)
+shader_parameter/emission_intensity = 0.0
+shader_parameter/hexagon_texture_sampler = ExtResource("2_iimqn")

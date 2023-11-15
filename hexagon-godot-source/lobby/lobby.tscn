@@ -1,0 +1,384 @@
+[gd_scene load_steps=8 format=3 uid="uid://jhdlqsokif5o"]
+
+[ext_resource type="Script" path="res://lobby/lobby.gd" id="1_bgmtl"]
+[ext_resource type="Theme" uid="uid://ilmetsar4m2d" path="res://lobby/assets/lobby_theme.tres" id="1_dtiqd"]
+[ext_resource type="Material" uid="uid://6uo5fr7fhw4w" path="res://lobby/assets/hexbackground/hexabackground_mat.tres" id="3_7i2ex"]
+[ext_resource type="PackedScene" uid="uid://bj02jg65776sa" path="res://lobby/assets/spinner/spinner.tscn" id="4_ijk3f"]
+[ext_resource type="Texture2D" uid="uid://76hn7u7n4yw1" path="res://lobby/assets/blank.png" id="5_jw0rl"]
+[ext_resource type="Texture2D" uid="uid://c0382eho84ajd" path="res://lobby/assets/refresh_icon.svg" id="6_2s5fr"]
+
+[sub_resource type="Theme" id="Theme_rg45l"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource("1_dtiqd")
+script = ExtResource("1_bgmtl")
+
+[node name="Background" type="ColorRect" parent="."]
+material = ExtResource("3_7i2ex")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoginScreen" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -259.0
+offset_top = -151.5
+offset_right = 259.0
+offset_bottom = 151.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_rg45l")
+
+[node name="MarginContainer" type="MarginContainer" parent="LoginScreen"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Spinner" parent="LoginScreen/MarginContainer" instance=ExtResource("4_ijk3f")]
+layout_mode = 2
+text = "Logging in"
+
+[node name="JoinScreen" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -232.0
+offset_top = -271.0
+offset_right = 232.0
+offset_bottom = 271.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="JoinScreen"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinScreen/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="GridContainer" type="HBoxContainer" parent="JoinScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="NameLabel" type="Label" parent="JoinScreen/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.54902)
+text = "Username"
+horizontal_alignment = 2
+
+[node name="NameField" type="LineEdit" parent="JoinScreen/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Separation" type="Control" parent="JoinScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HostButton" type="Button" parent="JoinScreen/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="JoinScreen/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Join"
+
+[node name="ListLobbiesButton" type="Button" parent="JoinScreen/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "List Lobbies"
+
+[node name="ResetProfile" type="Button" parent="JoinScreen/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset Profile"
+
+[node name="Separation2" type="Control" parent="JoinScreen/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="JoinErrorLabel" type="Label" parent="JoinScreen/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.820312, 0.291595, 0.291595, 1)
+text = "ERROR"
+horizontal_alignment = 1
+
+[node name="PlayersScreen" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -221.0
+offset_top = -239.0
+offset_right = 222.0
+offset_bottom = 239.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayersScreen"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayersScreen/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 28
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayersScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LobbyIdLabel" type="Label" parent="PlayersScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.54902)
+text = "Lobby ID:"
+
+[node name="LobbyIdField" type="LineEdit" parent="PlayersScreen/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+
+[node name="StateLabel" type="Label" parent="PlayersScreen/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 0
+text = "Awaiting Players..."
+
+[node name="PlayersList" type="ItemList" parent="PlayersScreen/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PlayersScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BackButton" type="Button" parent="PlayersScreen/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Back"
+
+[node name="StartButton" type="Button" parent="PlayersScreen/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Start!"
+
+[node name="Overlay" type="TextureButton" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(0, 0, 0, 0.537255)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_jw0rl")
+stretch_mode = 0
+
+[node name="ErrorDialog" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+
+[node name="JoinLobbyPopup" type="Popup" parent="."]
+unique_name_in_owner = true
+initial_position = 1
+size = Vector2i(420, 200)
+always_on_top = true
+
+[node name="PopupRoot" type="Control" parent="JoinLobbyPopup"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="JoinLobbyPopup/PopupRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.454902, 0.321569, 0.988235, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="JoinLobbyPopup/PopupRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinLobbyPopup/PopupRoot/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="JoinLobbyPopup/PopupRoot/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Insert the ID of the Lobby and click Join"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="JoinLobbyPopup/PopupRoot/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LobbyId" type="LineEdit" parent="JoinLobbyPopup/PopupRoot/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinLobbyButton" type="Button" parent="JoinLobbyPopup/PopupRoot/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Join"
+
+[node name="ListLobbiesPopup" type="Popup" parent="."]
+unique_name_in_owner = true
+initial_position = 1
+size = Vector2i(420, 480)
+always_on_top = true
+
+[node name="PopupRoot" type="Control" parent="ListLobbiesPopup"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="ListLobbiesPopup/PopupRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.454902, 0.321569, 0.988235, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ListLobbiesPopup/PopupRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ListLobbiesPopup/PopupRoot/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Select your region:"
+vertical_alignment = 1
+
+[node name="ClusterOptions" type="OptionButton" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+allow_reselect = true
+
+[node name="RefreshButton" type="Button" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/HBoxContainer/RefreshButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_2s5fr")
+expand_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_right = 60
+
+[node name="LobbiesList" type="VBoxContainer" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="LobbiesLoadingImage" type="Control" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Spinner" parent="ListLobbiesPopup/PopupRoot/MarginContainer/VBoxContainer/ScrollContainer/MarginContainer/LobbiesLoadingImage" instance=ExtResource("4_ijk3f")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.5
+offset_top = -20.0
+offset_right = 52.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2

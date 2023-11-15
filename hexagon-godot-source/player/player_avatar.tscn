@@ -1,0 +1,222 @@
+[gd_scene load_steps=22 format=3 uid="uid://xdn5d4psnb4x"]
+
+[ext_resource type="Script" path="res://player/player_avatar.gd" id="1_5sqql"]
+[ext_resource type="PackedScene" uid="uid://cy36aygvs66pn" path="res://player/assets/gobot/gobot_skin.tscn" id="2_0ujrq"]
+[ext_resource type="AudioStream" uid="uid://b2n7kbtgqtqke" path="res://assets/sounds/footstep_wood_000.ogg" id="5_i8yrm"]
+[ext_resource type="AudioStream" uid="uid://gc5pm1son0pt" path="res://assets/sounds/impactWood_heavy_004.ogg" id="6_b78wo"]
+[ext_resource type="PackedScene" uid="uid://br1ejsssjtxrm" path="res://player/local_player_controller.tscn" id="7_t2nlb"]
+
+[sub_resource type="Shader" id="Shader_j1f1m"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.1.1.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float proximity_fade_distance;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	ALPHA *= albedo.a * albedo_tex.a;
+	float depth_tex = textureLod(depth_texture,SCREEN_UV,0.0).r;
+	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex,1.0);
+	world_pos.xyz/=world_pos.w;
+	ALPHA*=clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0) * COLOR.a;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8blmb"]
+render_priority = 0
+shader = SubResource("Shader_j1f1m")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/proximity_fade_distance = 0.1
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_ku05a"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vv5nk"]
+gradient = SubResource("Gradient_ku05a")
+
+[sub_resource type="Curve" id="Curve_q6xod"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_x7hsd"]
+curve = SubResource("Curve_q6xod")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_am1et"]
+lifetime_randomness = 0.2
+direction = Vector3(0, 0, -1)
+gravity = Vector3(0, 1, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.5
+damping_min = 2.0
+damping_max = 2.0
+scale_min = 0.4
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_x7hsd")
+color_ramp = SubResource("GradientTexture1D_vv5nk")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ru8ot"]
+radius = 0.4
+height = 0.8
+radial_segments = 16
+rings = 8
+
+[sub_resource type="Gradient" id="Gradient_bj33j"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qp0aq"]
+gradient = SubResource("Gradient_bj33j")
+
+[sub_resource type="Curve" id="Curve_g4io8"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_k48nx"]
+curve = SubResource("Curve_g4io8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s5mue"]
+lifetime_randomness = 0.2
+direction = Vector3(0, 0, 0)
+spread = 180.0
+flatness = 1.0
+gravity = Vector3(0, 2, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+damping_min = 2.0
+damping_max = 2.0
+scale_min = 0.4
+scale_max = 0.6
+scale_curve = SubResource("CurveTexture_k48nx")
+color_ramp = SubResource("GradientTexture1D_qp0aq")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ktmbt"]
+height = 1.34852
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_t3nrr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/0/watch = false
+properties/1/path = NodePath(".:player_peer_id")
+properties/1/spawn = true
+properties/1/sync = false
+properties/1/watch = false
+properties/2/path = NodePath(".:player_name")
+properties/2/spawn = true
+properties/2/sync = false
+properties/2/watch = false
+properties/3/path = NodePath("GobotSkin:rotation")
+properties/3/spawn = true
+properties/3/sync = true
+properties/3/watch = false
+properties/4/path = NodePath(".:player_index")
+properties/4/spawn = true
+properties/4/sync = false
+properties/4/watch = false
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ekqrk"]
+properties/0/path = NodePath("LocalPlayerController:move_direction")
+properties/0/spawn = false
+properties/0/sync = true
+properties/0/watch = false
+
+[node name="PlayerAvatar" type="CharacterBody3D"]
+script = ExtResource("1_5sqql")
+
+[node name="GobotSkin" parent="." instance=ExtResource("2_0ujrq")]
+unique_name_in_owner = true
+
+[node name="DustParticles" type="GPUParticles3D" parent="GobotSkin"]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_8blmb")
+cast_shadow = 0
+emitting = false
+amount = 6
+lifetime = 0.6
+process_material = SubResource("ParticleProcessMaterial_am1et")
+draw_pass_1 = SubResource("SphereMesh_ru8ot")
+
+[node name="ImpactParticles" type="GPUParticles3D" parent="GobotSkin"]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_8blmb")
+cast_shadow = 0
+emitting = false
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_s5mue")
+draw_pass_1 = SubResource("SphereMesh_ru8ot")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.677011, 0)
+shape = SubResource("CapsuleShape3D_ktmbt")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_t3nrr")
+
+[node name="LocalPlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_ekqrk")
+
+[node name="LocalPlayerController" parent="." instance=ExtResource("7_t2nlb")]
+unique_name_in_owner = true
+
+[node name="PlayerName" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.06725, 0)
+billboard = 1
+text = "Player1"
+
+[node name="FootStepAudio" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_i8yrm")
+max_db = 0.0
+max_distance = 10.0
+
+[node name="GroundImpactAudio" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_b78wo")
+max_distance = 8.0
+
+[editable path="LocalPlayerController"]

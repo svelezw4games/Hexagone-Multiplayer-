@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cm4wd2bljr5h7"]
+
+[ext_resource type="Shader" path="res://level/assets/logo_ring/logo_ring.gdshader" id="1_qu5sq"]
+[ext_resource type="Texture2D" uid="uid://b1kj5ycrl000t" path="res://level/assets/logo_ring/w4_logo.png" id="2_n0rca"]
+[ext_resource type="Script" path="res://level/assets/logo_ring/logo_ring.gd" id="3_hbi62"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i7hj"]
+render_priority = 0
+shader = ExtResource("1_qu5sq")
+shader_parameter/logo_scale = 15.0
+shader_parameter/color = Color(0.654902, 0.607843, 1, 1)
+shader_parameter/logo_sampler = ExtResource("2_n0rca")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_s5odk"]
+flip_faces = true
+top_radius = 47.7465
+bottom_radius = 47.7465
+height = 10.0
+cap_top = false
+cap_bottom = false
+
+[node name="Logo" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+material_override = SubResource("ShaderMaterial_0i7hj")
+mesh = SubResource("CylinderMesh_s5odk")
+script = ExtResource("3_hbi62")
+perimeter = 300.0

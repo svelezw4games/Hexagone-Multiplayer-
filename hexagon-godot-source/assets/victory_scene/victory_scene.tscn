@@ -1,0 +1,530 @@
+[gd_scene load_steps=22 format=3 uid="uid://dagjq883bf1dw"]
+
+[ext_resource type="Script" path="res://assets/victory_scene/victory_scene.gd" id="1_5ccex"]
+[ext_resource type="Shader" path="res://assets/victory_scene/sky/gradient_sky.gdshader" id="1_idcp6"]
+[ext_resource type="PackedScene" uid="uid://cy36aygvs66pn" path="res://player/assets/gobot/gobot_skin.tscn" id="2_2metx"]
+[ext_resource type="Gradient" uid="uid://cvb2jay4a5qjm" path="res://player/assets/players_color_gradient.tres" id="2_eh3uc"]
+[ext_resource type="Script" path="res://assets/victory_scene/players_holder.gd" id="3_g3c7i"]
+[ext_resource type="PackedScene" uid="uid://b3ui4ufytbv73" path="res://assets/victory_scene/pillar.tscn" id="4_hgikw"]
+[ext_resource type="Script" path="res://assets/victory_scene/fireworks_generator.gd" id="6_m22hx"]
+[ext_resource type="PackedScene" uid="uid://bwbsr64sk3hw8" path="res://assets/victory_scene/winner_tag.tscn" id="7_aqgr7"]
+[ext_resource type="AudioStream" uid="uid://xvj5unbafh07" path="res://assets/victory_scene/sounds/stageclear20120602_take01.mp3" id="7_c72da"]
+[ext_resource type="FontFile" uid="uid://dc3hgyihoiav3" path="res://player/assets/fonts/rubik/Rubik-SemiBold.ttf" id="11_hp5nx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ybyfa"]
+shader = ExtResource("1_idcp6")
+shader_parameter/top_color = Color(0.517647, 0.698039, 1, 1)
+shader_parameter/bottom_color = Color(0.301961, 0.556863, 1, 1)
+shader_parameter/sun_scatter = Color(0.47451, 0.160784, 0, 1)
+
+[sub_resource type="Sky" id="Sky_wicgv"]
+sky_material = SubResource("ShaderMaterial_ybyfa")
+
+[sub_resource type="Environment" id="Environment_jruue"]
+background_mode = 2
+background_color = Color(0.823529, 0.870588, 0.835294, 1)
+sky = SubResource("Sky_wicgv")
+ambient_light_color = Color(0.807843, 0.627451, 0.619608, 1)
+ambient_light_sky_contribution = 0.5
+tonemap_mode = 2
+tonemap_exposure = 1.1
+tonemap_white = 0.9
+ssao_enabled = true
+glow_enabled = true
+glow_intensity = 0.25
+fog_enabled = true
+fog_light_color = Color(0.513726, 0.643137, 0.937255, 1)
+fog_density = 0.0025
+fog_sky_affect = 0.0
+fog_height = -0.6
+fog_height_density = 0.25
+
+[sub_resource type="Animation" id="Animation_1vwvo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Anchor/Winner:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Anchor/Winner:squash_stretch_ratio")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CameraAnchor:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.8, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CameraAnchor:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.279253, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("PlayersHolder:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CameraAnchor/Camera3D:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 4)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("AudioStreamPlayer:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_kn2xv"]
+resource_name = "enter"
+length = 2.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.2, 1.7, 2),
+"transitions": PackedFloat32Array(-2, 0.5, 0.5),
+"update": 0,
+"values": [-3.0, 1.8, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Anchor/Winner:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.5, 1.75, 2),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [0.0, 0.8, 0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Anchor/Winner")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.5, 1.75, 2, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"jump"
+}, {
+"args": [],
+"method": &"fall"
+}, {
+"args": [],
+"method": &"idle"
+}, {
+"args": [],
+"method": &"victory_sign"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Anchor/Winner:squash_stretch_ratio")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.5, 1.75, 2, 2.3),
+"transitions": PackedFloat32Array(-2, -2, -2, -2),
+"update": 0,
+"values": [-0.2, 0.1, -0.2, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CameraAnchor:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.34, 1.62),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 1.8, 0), Vector3(0, 2.2, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CameraAnchor:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.34, 1.62),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(-0.279253, 0, 0), Vector3(-0.139626, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PlayersHolder:position:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.8),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [-4.0, 0.2, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CameraAnchor/Camera3D:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.9, 2.11, 2.32),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector3(0, 0, 4), Vector3(0, 0, 2.8), Vector3(0, 0, 3)]
+}
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("PlayersHolder")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(2.04),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"everyone_clap"
+}]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("AudioStreamPlayer:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(-2),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-80.0, -20.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mf2wq"]
+_data = {
+"RESET": SubResource("Animation_1vwvo"),
+"enter": SubResource("Animation_kn2xv")
+}
+
+[sub_resource type="Shader" id="Shader_bunl8"]
+code = "shader_type canvas_item;
+
+uniform sampler2D screen_texture : hint_screen_texture, filter_linear_mipmap;
+uniform vec4 line_color : source_color = vec4(1.0);
+uniform float line_thickness : hint_range(0, 10) = 1.0;
+
+const vec2 OFFSETS[12] = { vec2(-1, 0), vec2(0, -1), vec2(0, 1), vec2(1, 0), vec2(-0.85, 0.5), vec2(-0.5, 0.85), vec2(0.85, 0.5), vec2(0.5, 0.85), vec2(-0.85, -0.5), vec2(-0.5, -0.85), vec2(0.85, -0.5), vec2(0.5, -0.85)
+};
+
+uniform float alpha : hint_range(0.0, 1.0, 0.1) = 1.0;
+
+// When called for each fragment, draws an outline around a sprite
+float outline(vec2 size, vec2 uv, sampler2D color){
+	float outline = 0.0;
+	for(int i = 0; i < OFFSETS.length(); i++){
+		outline += texture(color, uv + size * OFFSETS[i]).a;
+	}
+	return min(outline, 1.0);
+}
+
+void vertex() {
+	VERTEX += (UV * 2.0 - 1.0) * line_thickness;
+}
+
+void fragment() {
+	
+	vec2 uv = SCREEN_UV;
+	vec2 size = (SCREEN_PIXEL_SIZE * line_thickness);
+	float o = min(1.0, outline(size, uv, screen_texture));
+	
+	vec4 screen_color = texture(screen_texture, uv);
+	COLOR.rgb = mix(line_color.rgb, screen_color.rgb, screen_color.a);
+ 	COLOR.a = o * alpha;
+	
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a5a8i"]
+shader = SubResource("Shader_bunl8")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/line_thickness = 3.0
+shader_parameter/alpha = 0.0
+
+[sub_resource type="Animation" id="Animation_aig6p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup:material:shader_parameter/alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_bmmaj"]
+resource_name = "default"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasGroup:material:shader_parameter/alpha")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.3, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3hfbq"]
+_data = {
+"RESET": SubResource("Animation_aig6p"),
+"default": SubResource("Animation_bmmaj")
+}
+
+[node name="VictoryScene" type="Node"]
+script = ExtResource("1_5ccex")
+player_color_gradient = ExtResource("2_eh3uc")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jruue")
+
+[node name="PlayersHolder" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_g3c7i")
+
+[node name="CameraAnchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.961261, 0.275637, 0, -0.275637, 0.961261, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+fov = 60.0
+
+[node name="Anchor" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Winner" parent="Anchor" instance=ExtResource("2_2metx")]
+unique_name_in_owner = true
+
+[node name="PillarMesh" parent="Anchor" instance=ExtResource("4_hgikw")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.537299, 0.730398, -0.421696, 0, 0.5, 0.866026, 0.843391, -0.465315, 0.26865, 0, 0, 0)
+light_energy = 1.2
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="Fireworks" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+script = ExtResource("6_m22hx")
+
+[node name="FireworkHolder" type="Node3D" parent="Fireworks"]
+unique_name_in_owner = true
+
+[node name="Timer" type="Timer" parent="Fireworks"]
+unique_name_in_owner = true
+one_shot = true
+autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_c72da")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_mf2wq")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WinnerTag" parent="CanvasLayer/Control" instance=ExtResource("7_aqgr7")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.188889
+anchor_right = 0.5
+anchor_bottom = 0.188889
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BackLabel" type="Control" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="CanvasGroup" type="CanvasGroup" parent="CanvasLayer/Control/BackLabel"]
+material = SubResource("ShaderMaterial_a5a8i")
+use_mipmaps = true
+
+[node name="TextAnchor" type="Control" parent="CanvasLayer/Control/BackLabel/CanvasGroup"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BackInstruction" type="Label" parent="CanvasLayer/Control/BackLabel/CanvasGroup/TextAnchor"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -498.0
+offset_top = -75.0
+offset_right = 498.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0.423529, 0.32549, 1, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("11_hp5nx")
+theme_override_font_sizes/font_size = 32
+text = "Press space or click to go back to menu!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Control/BackLabel"]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_3hfbq")
+}
+
+[node name="OverlayButton" type="TextureButton" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="CanvasLayer/Control/OverlayButton" to="." method="_on_overlay_clicked"]

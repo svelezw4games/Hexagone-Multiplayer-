@@ -1,0 +1,112 @@
+[gd_scene load_steps=17 format=3 uid="uid://dfka8x4uc8ret"]
+
+[ext_resource type="Script" path="res://level/assets/hexagon_tile.gd" id="1_km1kc"]
+[ext_resource type="Material" uid="uid://ddnfgmmcrmm4c" path="res://level/assets/tile/material/hexagon_material.tres" id="2_6nfff"]
+[ext_resource type="Script" path="res://level/assets/hexagon_collision_shape.gd" id="2_phoht"]
+[ext_resource type="ArrayMesh" uid="uid://c4n25cmyibrh" path="res://level/assets/tile/hexagon_mesh.obj" id="2_uku3g"]
+[ext_resource type="AudioStream" uid="uid://cn8cspcbee1jt" path="res://assets/sounds/switch21.ogg" id="5_ejtcc"]
+[ext_resource type="AudioStream" uid="uid://cti841pod2t1f" path="res://assets/sounds/lowDown.ogg" id="6_ce0ai"]
+[ext_resource type="Texture2D" uid="uid://bd1sh7nsqq6m0" path="res://level/assets/trigger_particles_sprite.png" id="7_crqgh"]
+[ext_resource type="Shader" path="res://level/assets/trigger_particles_process.gdshader" id="7_ylyoo"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0ym8x"]
+points = PackedVector3Array(6.12323e-17, -0.15, 1, 6.12323e-17, 0.15, 1, -0.866025, -0.15, 0.5, -0.866025, 0.15, 0.5, -0.866025, -0.15, -0.5, -0.866025, 0.15, -0.5, -1.83697e-16, -0.15, -1, -1.83697e-16, 0.15, -1, 0.866025, -0.15, -0.5, 0.866025, 0.15, -0.5, 0.866025, -0.15, 0.5, 0.866025, 0.15, 0.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4albx"]
+points = PackedVector3Array(5.81707e-17, -0.05, 0.95, 5.81707e-17, 0.05, 0.95, -0.822724, -0.05, 0.475, -0.822724, 0.05, 0.475, -0.822724, -0.05, -0.475, -0.822724, 0.05, -0.475, -1.74512e-16, -0.05, -0.95, -1.74512e-16, 0.05, -0.95, 0.822724, -0.05, -0.475, 0.822724, 0.05, -0.475, 0.822724, -0.05, 0.475, 0.822724, 0.05, 0.475)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_chm8h"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = false
+properties/0/watch = false
+properties/1/path = NodePath(".:color")
+properties/1/spawn = true
+properties/1/sync = false
+properties/1/watch = false
+properties/2/path = NodePath(".:light_color")
+properties/2/spawn = true
+properties/2/sync = false
+properties/2/watch = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kslf8"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+albedo_texture = ExtResource("7_crqgh")
+
+[sub_resource type="Curve" id="Curve_vnm3q"]
+_data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_rnumm"]
+texture_mode = 1
+curve = SubResource("Curve_vnm3q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cfiuh"]
+shader = ExtResource("7_ylyoo")
+shader_parameter/base_scale = 0.6
+shader_parameter/scale_curve = SubResource("CurveTexture_rnumm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_acy7x"]
+size = Vector2(0.5, 1)
+
+[node name="HexagonTile" type="StaticBody3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("1_km1kc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+shape = SubResource("ConvexPolygonShape3D_0ym8x")
+script = ExtResource("2_phoht")
+radius = 1.0
+depth = 0.15
+
+[node name="HexagonMesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
+material_override = ExtResource("2_6nfff")
+mesh = ExtResource("2_uku3g")
+
+[node name="Area3D" type="Area3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("ConvexPolygonShape3D_4albx")
+script = ExtResource("2_phoht")
+radius = 0.95
+depth = 0.05
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_chm8h")
+
+[node name="ActivationAudio" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.666667, 0, 0, 0, 0.666667, 0, 0, 0)
+stream = ExtResource("5_ejtcc")
+volume_db = -10.0
+max_distance = 10.0
+
+[node name="DeleteSound" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.666667, 0, 0, 0, 0.666667, 0, 0, 0, 0.666667, 0, 0, 0)
+stream = ExtResource("6_ce0ai")
+volume_db = -20.0
+max_distance = 14.0
+
+[node name="TriggerParticles" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+material_override = SubResource("StandardMaterial3D_kslf8")
+cast_shadow = 0
+emitting = false
+amount = 3
+lifetime = 0.4
+explosiveness = 1.0
+interpolate = false
+draw_order = 1
+transform_align = 3
+process_material = SubResource("ShaderMaterial_cfiuh")
+draw_pass_1 = SubResource("QuadMesh_acy7x")

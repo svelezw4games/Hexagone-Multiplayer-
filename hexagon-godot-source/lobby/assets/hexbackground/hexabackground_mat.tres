@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://6uo5fr7fhw4w"]
+
+[ext_resource type="Shader" path="res://lobby/assets/hexbackground/hexbackground.gdshader" id="1_mnwm5"]
+
+[resource]
+shader = ExtResource("1_mnwm5")
+shader_parameter/hexagon_size = 100.0
+shader_parameter/dark_color = Color(0.419608, 0.282353, 1, 1)
+shader_parameter/light_color = Color(0.627451, 0.611765, 0.992157, 1)

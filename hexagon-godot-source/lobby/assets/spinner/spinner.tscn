@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bj02jg65776sa"]
+
+[ext_resource type="Script" path="res://lobby/assets/spinner/spinner.gd" id="1_ncrob"]
+[ext_resource type="Material" uid="uid://di2sq02i5qhp5" path="res://lobby/assets/spinner/spinner_mat.tres" id="1_yfb25"]
+[ext_resource type="Shader" path="res://lobby/assets/spinner/spinner_sprite.gdshader" id="2_k8pbv"]
+[ext_resource type="Texture2D" uid="uid://drhbm3c31wh5f" path="res://lobby/assets/spinner/spinner_sprite.png" id="3_btrv8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdkmj"]
+shader = ExtResource("2_k8pbv")
+shader_parameter/base_color = Color(0.6, 0.509804, 1, 1)
+
+[node name="Spinner" type="HBoxContainer"]
+offset_right = 98.0
+offset_bottom = 40.0
+script = ExtResource("1_ncrob")
+
+[node name="Spinner" type="ColorRect" parent="."]
+visible = false
+material = ExtResource("1_yfb25")
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Spinner2" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_gdkmj")
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_btrv8")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Loading"

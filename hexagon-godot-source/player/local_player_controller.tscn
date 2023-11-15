@@ -1,0 +1,239 @@
+[gd_scene load_steps=13 format=3 uid="uid://br1ejsssjtxrm"]
+
+[ext_resource type="Script" path="res://player/local_player_controller.gd" id="1_0qm63"]
+[ext_resource type="Script" path="res://player/assets/death_camera.gd" id="2_oqqm8"]
+[ext_resource type="FontFile" uid="uid://dc3hgyihoiav3" path="res://player/assets/fonts/rubik/Rubik-SemiBold.ttf" id="3_vek64"]
+[ext_resource type="AudioStream" uid="uid://bboxuy21q3og6" path="res://assets/sounds/preMatchCountdown.wav" id="4_t5byp"]
+[ext_resource type="Script" path="res://player/assets/camera_controller.gd" id="5_d2ehb"]
+[ext_resource type="AudioStream" uid="uid://c5j36gjkdlifu" path="res://assets/sounds/showYourMoves.mp3" id="8_y0eli"]
+
+[sub_resource type="Animation" id="Animation_ytyvc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_d7qh3"]
+resource_name = "default"
+length = 30.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_catwn"]
+_data = {
+"RESET": SubResource("Animation_ytyvc"),
+"default": SubResource("Animation_d7qh3")
+}
+
+[sub_resource type="Animation" id="Animation_vhjf5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["3"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CountdownSound:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_nrj31"]
+resource_name = "count_down"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["3", "2", "1", "Go!"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(5.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CountdownSound:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%GameMusic:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bj81w"]
+_data = {
+"RESET": SubResource("Animation_vhjf5"),
+"count_down": SubResource("Animation_nrj31")
+}
+
+[node name="LocalPlayerController" type="Node3D"]
+script = ExtResource("1_0qm63")
+
+[node name="CameraController" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_d2ehb")
+invert_mouse_y = true
+tilt_upper_limit = 0.4
+tilt_lower_limit = 0.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
+unique_name_in_owner = true
+transform = Transform3D(-1, -5.01437e-08, 7.16126e-08, 0, 0.819153, 0.573577, -8.74228e-08, 0.573577, -0.819153, -0.012, 2.225, -2.911)
+
+[node name="DeathCameraController" type="Node3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+script = ExtResource("2_oqqm8")
+
+[node name="DeathCamera3D" type="Camera3D" parent="DeathCameraController"]
+unique_name_in_owner = true
+transform = Transform3D(0.691513, -0.485268, 0.535093, 0, 0.740753, 0.671778, -0.722364, -0.464543, 0.51224, 18.1287, 18.3798, 14.7217)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DeathCameraController"]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_catwn")
+}
+
+[node name="CountDown" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="CountDown"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(642, 355)
+theme_override_colors/font_outline_color = Color(0.423529, 0.32549, 1, 1)
+theme_override_constants/outline_size = 64
+theme_override_fonts/font = ExtResource("3_vek64")
+theme_override_font_sizes/font_size = 128
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CountDown"]
+autoplay = "count_down"
+libraries = {
+"": SubResource("AnimationLibrary_bj81w")
+}
+
+[node name="CountdownSound" type="AudioStreamPlayer" parent="CountDown"]
+stream = ExtResource("4_t5byp")
+volume_db = -10.0
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_y0eli")
+volume_db = -4.0

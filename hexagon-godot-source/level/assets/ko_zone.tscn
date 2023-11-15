@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3miu0ek8gv73"]
+
+[ext_resource type="Shader" path="res://level/assets/ko_zone/ko_zone.gdshader" id="1_5urvv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pvxxs"]
+render_priority = 0
+shader = ExtResource("1_5urvv")
+shader_parameter/color = Color(0.937255, 0.631373, 0.980392, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_80mmb"]
+size = Vector2(40, 40)
+
+[node name="KoZone" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, 0)
+material_override = SubResource("ShaderMaterial_pvxxs")
+mesh = SubResource("PlaneMesh_80mmb")

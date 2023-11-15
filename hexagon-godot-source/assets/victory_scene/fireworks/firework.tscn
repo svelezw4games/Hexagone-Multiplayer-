@@ -1,0 +1,101 @@
+[gd_scene load_steps=18 format=3 uid="uid://vadr0xhyakof"]
+
+[ext_resource type="Script" path="res://assets/victory_scene/fireworks/firework.gd" id="1_6q6na"]
+[ext_resource type="Shader" path="res://assets/victory_scene/fireworks/firework_main_particles_visual.gdshader" id="1_ldr05"]
+[ext_resource type="Shader" path="res://assets/victory_scene/fireworks/firework_sparks_particles_visual.gdshader" id="2_yif4d"]
+
+[sub_resource type="Gradient" id="Gradient_ogqkv"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 0.333333, 0, 1, 1, 0.76, 0.04, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ockqy"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_ldr05")
+
+[sub_resource type="Gradient" id="Gradient_mvjie"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nhdwj"]
+gradient = SubResource("Gradient_mvjie")
+
+[sub_resource type="Curve" id="Curve_yqljg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xam32"]
+curve = SubResource("Curve_yqljg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g77i8"]
+resource_local_to_scene = true
+lifetime_randomness = 0.2
+direction = Vector3(0, 1, 0)
+spread = 90.0
+gravity = Vector3(0, -4.25, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+scale_curve = SubResource("CurveTexture_xam32")
+color = Color(0.847059, 0.423529, 0, 1)
+color_ramp = SubResource("GradientTexture1D_nhdwj")
+sub_emitter_mode = 1
+sub_emitter_frequency = 60.0
+
+[sub_resource type="Curve" id="Curve_hjq7q"]
+_data = [Vector2(0, 0), 0.0, 5.1405, 0, 0, Vector2(1, 0), -2.36842, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_s128x"]
+shape = 0
+size = 0.1
+curve = SubResource("Curve_hjq7q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mmq8w"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_yif4d")
+
+[sub_resource type="Curve" id="Curve_fga6v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_p5kad"]
+curve = SubResource("Curve_fga6v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4t877"]
+resource_local_to_scene = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+scale_min = 0.2
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_p5kad")
+color = Color(0.964706, 0.376471, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_eoklh"]
+size = Vector2(0.1, 0.1)
+
+[node name="Firework" type="Node3D"]
+script = ExtResource("1_6q6na")
+gradient = SubResource("Gradient_ogqkv")
+
+[node name="Body" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_ockqy")
+sub_emitter = NodePath("../Sparks")
+explosiveness = 1.0
+transform_align = 3
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_g77i8")
+draw_pass_1 = SubResource("RibbonTrailMesh_s128x")
+
+[node name="Sparks" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_mmq8w")
+emitting = false
+amount = 256
+lifetime = 0.5
+transform_align = 1
+process_material = SubResource("ParticleProcessMaterial_4t877")
+draw_pass_1 = SubResource("QuadMesh_eoklh")

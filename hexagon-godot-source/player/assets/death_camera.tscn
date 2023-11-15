@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://dryfbc2nf0jm3"]
+
+[ext_resource type="Script" path="res://player/assets/death_camera.gd" id="1_jlh1x"]
+
+[sub_resource type="Animation" id="Animation_ytyvc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_d7qh3"]
+resource_name = "default"
+length = 30.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_catwn"]
+_data = {
+"RESET": SubResource("Animation_ytyvc"),
+"default": SubResource("Animation_d7qh3")
+}
+
+[node name="MatchCamera" type="Node3D"]
+script = ExtResource("1_jlh1x")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.691513, -0.485268, 0.535093, 0, 0.740753, 0.671778, -0.722364, -0.464543, 0.51224, 18.1287, 18.3798, 14.7217)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_catwn")
+}

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3ui4ufytbv73"]
+
+[ext_resource type="ArrayMesh" uid="uid://c6vskv1b1a81v" path="res://assets/victory_scene/pillar_mesh.obj" id="1_cets3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_02o38"]
+albedo_color = Color(0.345098, 0.411765, 0.929412, 1)
+roughness = 0.6
+
+[node name="PillarMesh" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_02o38")
+mesh = ExtResource("1_cets3")
+skeleton = NodePath("../..")

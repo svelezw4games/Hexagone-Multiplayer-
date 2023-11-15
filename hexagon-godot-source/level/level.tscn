@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=3 uid="uid://cova5apcjjncm"]
+
+[ext_resource type="Script" path="res://level/level.gd" id="1_uefcw"]
+[ext_resource type="Gradient" uid="uid://dxx7vcgvkryjg" path="res://level/assets/platform_color_gradient.tres" id="2_grs6t"]
+[ext_resource type="Shader" path="res://level/assets/logo_ring/logo_ring.gdshader" id="4_aorj5"]
+[ext_resource type="Texture2D" uid="uid://b1kj5ycrl000t" path="res://level/assets/logo_ring/w4_logo.png" id="5_jlnek"]
+[ext_resource type="Script" path="res://level/assets/logo_ring/logo_ring.gd" id="6_v21ig"]
+[ext_resource type="Shader" path="res://level/assets/ko_zone/ko_zone.gdshader" id="7_n2e6o"]
+
+[sub_resource type="Environment" id="Environment_gtje3"]
+background_mode = 1
+background_color = Color(0.823529, 0.870588, 0.835294, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.643137, 0.588235, 0.615686, 1)
+tonemap_mode = 2
+tonemap_exposure = 1.1
+tonemap_white = 0.9
+glow_enabled = true
+glow_intensity = 0.25
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i7hj"]
+render_priority = 0
+shader = ExtResource("4_aorj5")
+shader_parameter/logo_scale = 15.0
+shader_parameter/color = Color(0.654902, 0.607843, 1, 1)
+shader_parameter/logo_sampler = ExtResource("5_jlnek")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_s5odk"]
+flip_faces = true
+top_radius = 47.7465
+bottom_radius = 47.7465
+height = 10.0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pvxxs"]
+render_priority = 0
+shader = ExtResource("7_n2e6o")
+shader_parameter/color = Color(0.937255, 0.631373, 0.980392, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_80mmb"]
+size = Vector2(40, 40)
+
+[node name="Playground" type="Node3D"]
+script = ExtResource("1_uefcw")
+layers_color_gradient = ExtResource("2_grs6t")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_gtje3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 1.2
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="Logo" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+material_override = SubResource("ShaderMaterial_0i7hj")
+mesh = SubResource("CylinderMesh_s5odk")
+script = ExtResource("6_v21ig")
+perimeter = 300.0
+
+[node name="KoZone" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, 0)
+material_override = SubResource("ShaderMaterial_pvxxs")
+mesh = SubResource("PlaneMesh_80mmb")
